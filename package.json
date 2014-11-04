@@ -1,0 +1,21 @@
+{
+  "name": "sapui5-extensions",
+  "version": "1.22.9",
+  "description": "Contains additional elements for sapui5/openui5 and some bugfixes of original library",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "author": "Constantin Lebrecht",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-execute": "~0.1.5",
+    "grunt-contrib-uglify": "~0.5.1"
+  }
+}

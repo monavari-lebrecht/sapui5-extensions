@@ -1,0 +1,21 @@
+{
+  "name": "sapui5-extensions",
+  "version": "1.22.9",
+  "authors": [
+    "Constantin Lebrecht <constantin@monavari.de>"
+  ],
+  "description": "Contains additional elements for sapui5/openui5 and some bugfixes of original library",
+  "keywords": [
+    "openui5",
+    "sapui5"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.monavari.de",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
