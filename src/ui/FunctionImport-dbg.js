@@ -1,38 +1,39 @@
 (function ($, sap) {
 
-	$.sap.declare('sap.extensions.ui.FunctionImport'); 
+	$.sap.declare('sap.extensions.ui.FunctionImport');
 
 	/**
 	 * @class UI element that assigns a new model to its children where contents of function import will be assigned to in form
 	 * of a meta model.
-	 * 
+	 *
 	 * @example
-	 * <sap.extensions.ui.FunctionImport 
-	 * 					functionImportName="FunctionName" 
-	 * 					parameters="{
+	 * <sap.extensions.ui.FunctionImport
+	 *                    functionImportName="FunctionName"
+	 *                    parameters="{
 	 *						Argument1: '1',
 	 *						Argument2: '2'
-	 *					}" 
-	 *					asModelName="FunctionImport" 
-	 *					modelName="SourceModel">
-	 * 		<Text text="{FunctionImport>/Result}"/>
+	 *					}"
+	 *                    asModelName="FunctionImport"
+	 *                    modelName="SourceModel">
+	 *        <Text text="{FunctionImport>/Result}"/>
 	 * </sap.extensions.ui.FunctionImport>
 	 *
 	 * @name sap.extensions.ui.FunctionImport
+	 * @extends sap.ui.core.Control
 	 */
 	sap.ui.core.Control.extend('sap.extensions.ui.FunctionImport', /** @lends sap.extensions.ui.FunctionImport */ {
 		metadata: {
-			properties: {
-				modelName: {
+			properties        : {
+				modelName         : {
 					type: 'string'
 				},
 				functionImportName: {
 					type: 'string'
 				},
-				parameters: {
+				parameters        : {
 					type: 'object'
 				},
-				asModelName: {
+				asModelName       : {
 					type: 'string'
 				}
 			},
@@ -62,7 +63,7 @@
 		 * @public
 		 * @function
 		 */
-		
+
 		/**
 		 * get model name the function import shall be imported from
 		 *
@@ -70,7 +71,7 @@
 		 * @public
 		 * @function
 		 */
-		
+
 		/**
 		 * name of function import service of model
 		 *
@@ -94,7 +95,7 @@
 		 * @public
 		 * @function
 		 */
-			
+
 		renderer: {
 			/**
 			 * Render function for control
@@ -112,28 +113,42 @@
 
 				// render child elements and assign meta model to it
 				dataContainer.getContent().forEach(function (dataObject) {
-					if(dataContainer.getAsModelName()) {
+					if (dataContainer.getAsModelName()) {
 						dataObject.setModel(metaModel, dataContainer.getAsModelName());
 					} else {
 						dataObject.setModel(metaModel);
 					}
-					
+
 					rm.renderControl(dataObject);
+				});
+
+				// iterate over url parameters to check if there is a computed value
+				var urlParameters = {};
+				$.each(dataContainer.getParameters(), function (index, value) {
+					var bindingContext = dataContainer.getBindingContext();
+					urlParameters[index] = bindingContext.getProperty('/' + value.slice(1, value.length - 1));
 				});
 
 				// load async data from function import to meta model
 				model.callFunction(dataContainer.getFunctionImportName(), {
-					urlParameters: dataContainer.getParameters(),
-					success      : function () {
-						var data = {},
-							parsedXML = jQuery.parseXML(arguments[1].body);
+					urlParameters: urlParameters,
+					success      : function (object, response) {
+						// check if we got a valid object
+						if (object) {
+							metaModel.setData(object[dataContainer.getFunctionImportName()]);
+						}
+						//if not, try to fetch it from xml by hand
+						if (response.headers["Content-Type"].indexOf('xml') > -1) {
+							var data = {},
+								parsedXML = jQuery.parseXML(arguments[1].body);
 
-						// collect all properties from xml
-						$('> *', parsedXML).children().each(function () {
-							data[this.localName] = $(this).text();
-						});
+							// collect all properties from xml
+							$('> *', parsedXML).children().each(function () {
+								data[this.localName] = $(this).text();
+							});
 
-						metaModel.setData(data);
+							metaModel.setData(data);
+						}
 					}
 				});
 			}

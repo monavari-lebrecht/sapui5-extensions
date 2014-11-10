@@ -1,4 +1,4 @@
-/*global module:false*/
+/*global module:false, require:false*/
 module.exports = function (grunt) {
 
     /**
@@ -6,7 +6,7 @@ module.exports = function (grunt) {
      */
     var getDebugFiles = function () {
         var detectedFiles = {};
-        var observedFolders = ['./', 'ui/'];
+        var observedFolders = ['./src', './src/ui/'];
 
         var iterateOverDirectoryCallback = function (directory) {
             var files = require('fs').readdirSync(directory);
@@ -81,11 +81,11 @@ module.exports = function (grunt) {
                 tasks: ["jshint:gruntfile"]
             },
             uglify    : {
-                files: ["ui/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
+                files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
                 tasks: ["uglify"]
             },
             jshint    : {
-                files: ["ui/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
+                files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
                 tasks: ["jshint"]
             }
         }
