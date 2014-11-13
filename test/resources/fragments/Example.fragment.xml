@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<core:FragmentDefinition
+        xmlns="sap.m"
+        xmlns:core="sap.ui.core"
+        xmlns:sapext="sap.extensions">
+    <sapext:ui.FunctionImport modelName="MyModel" functionImportName="MyFunctionImport" parameters="{
+        parameter1: '1'
+    }" asModelName="AsNewModel">
+        <Text text="test" />
+        <Text text="test" />
+    </sapext:ui.FunctionImport>
+</core:FragmentDefinition>
