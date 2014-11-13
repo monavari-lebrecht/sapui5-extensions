@@ -21,6 +21,22 @@ Example:
         }'> /* endOfResourceroots */
     </script>
     ```
+    
+## Tests
+
+1. install dependencies by running   
+    ```npm install```
+2. start karma server  
+    ```node_modules/karma/bin/karma start karma.conf.js```  
+    Per default one PhantomJS Instance is also started, connects to karma and executes the tests.
+3. Open a browser of your choice and connect it to [localhost:9876](http://localhost:9876/). The tests should be executed immediately.
+
+See also:
+
+- [Karma](http://karma-runner.github.io/)
+- [Mocha](http://mochajs.org/)
+- [Chai](http://mochajs.org/)
+- [Sinon.JS](sinonjs.org)
 
 ## Contents
 
