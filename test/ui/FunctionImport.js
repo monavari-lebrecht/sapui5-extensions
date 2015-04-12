@@ -5,8 +5,6 @@
 (function ($, sap) {
 	'use strict';
 
-	jQuery.sap.registerModulePath("test", "base/test");
-	jQuery.sap.registerModulePath("sap.extensions", "base/src");
 	jQuery.sap.require('sap.ui.model.odata.ODataModel');
 
 	module('Function Import');

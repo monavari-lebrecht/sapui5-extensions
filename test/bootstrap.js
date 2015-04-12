@@ -3,5 +3,6 @@
  */
 
 window["sap-ui-config"] = {
-	"xx-bindingSyntax": "complex"
+	"xx-bindingSyntax": "complex",
+	"debug": true
 };

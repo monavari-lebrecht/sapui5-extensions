@@ -14,12 +14,13 @@ module.exports = function (config) {
 		// list of files / patterns to load in the browser
 		files        : [
 			'test/bootstrap.js',
-			'bower_components/openui5-bower/resources/sap-ui-core-dbg.js',
+			'bower_components/openui5-bower/resources/sap-ui-core.js',
 			'bower_components/openui5-bower/resources/sap/ui/thirdparty/qunit-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/qunit/qunit-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/qunit/QUnitUtils-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/thirdparty/sinon-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/thirdparty/sinon-qunit-dbg.js',
+			'test/karma-module-paths.js',
 			{
 				pattern : 'bower_components/**/*.*',
 				included: false
