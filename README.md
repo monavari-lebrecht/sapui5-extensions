@@ -17,12 +17,14 @@ Example:
         data-sap-ui-xx-bindingSyntax="complex"
         data-sap-ui-resourceroots='{
                         "my.namespace": "./",
-                        "sap.extension": "bower_components/sapui5-extensions/src/"
+                        "openui5.extension": "bower_components/sapui5-extensions/src/"
         }'> /* endOfResourceroots */
     </script>
     ```
     
 ## Tests
+
+### Karma
 
 1. install dependencies by running   
     ```npm install```
@@ -31,19 +33,25 @@ Example:
     Per default one PhantomJS Instance is also started, connects to karma and executes the tests.
 3. Open a browser of your choice and connect it to [localhost:9876](http://localhost:9876/). The tests should be executed immediately.
 
+### Browser
+
+1. install dependencies by running
+    ```npm install```
+2. start grunt web server
+    ```grunt connect:qunit```
+3. Open a browser of your choice and open [localhost:9090](http://localhost:9090/). The tests should be executed immediately.
+
 See also:
 
 - [Karma](http://karma-runner.github.io/)
-- [Mocha](http://mochajs.org/)
-- [Chai](http://mochajs.org/)
-- [Sinon.JS](sinonjs.org)
+- [QUnit](http://qunitjs.com/)
 
 ## Contents
 
-### sap.extensions.ui.FunctionImport
+### openui5.extensions.ui.FunctionImport
 
 ```html
-<sap.extensions.ui.FunctionImport
+<openui5.extensions.ui.FunctionImport
   functionImportName="FunctionName"
   parameters="
     {
@@ -53,5 +61,5 @@ See also:
   asModelName="FunctionImport"
   modelName="SourceModel">
   <Text text="{FunctionImport>/Result}"/>
-</sap.extensions.ui.FunctionImport>
+</openui5.extensions.ui.FunctionImport>
 ```

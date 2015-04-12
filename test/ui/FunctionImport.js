@@ -5,14 +5,14 @@
 (function ($, sap) {
 	'use strict';
 
-	jQuery.sap.require('sap.extensions.ui.FunctionImport');
+	jQuery.sap.require('openui5.extensions.ui.FunctionImport');
 	jQuery.sap.require('sap.ui.model.odata.ODataModel');
 
 	module('Function Import');
 
 	test('should exist', function (assert) {
-		assert.ok(sap.extensions.ui.FunctionImport, 'sap.extensions.ui.FunctionImport doesn\'t exist');
-		assert.equal(typeof sap.extensions.ui.FunctionImport, 'function', 'sap.extensions.ui.FunctionImport should be a function');
+		assert.ok(openui5.extensions.ui.FunctionImport, 'openui5.extensions.ui.FunctionImport doesn\'t exist');
+		assert.equal(typeof openui5.extensions.ui.FunctionImport, 'function', 'openui5.extensions.ui.FunctionImport should be a function');
 	});
 
 	var stubController, fragmentFixture, stubModel;
