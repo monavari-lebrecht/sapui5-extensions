@@ -19,7 +19,6 @@
 	module('Function Import in a view', {
 		setup: function () {
 			// generate an odata mock object
-
 			stubModel = sinon.create(sap.ui.model.odata.ODataModel);
 
 			// generate a sample fragment with the function import element in it

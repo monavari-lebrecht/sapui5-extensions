@@ -5,16 +5,16 @@ module.exports = function (config) {
 	config.set({
 
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath     : '',
+		basePath: '',
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-		frameworks   : ['qunit'],
+		frameworks: ['qunit'],
 
 		// list of files / patterns to load in the browser
-		files        : [
+		files: [
 			'test/bootstrap.js',
-			'bower_components/openui5-bower/resources/sap-ui-core.js',
+			'bower_components/openui5-bower/resources/sap-ui-core-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/thirdparty/qunit-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/qunit/qunit-dbg.js',
 			'bower_components/openui5-bower/resources/sap/ui/qunit/QUnitUtils-dbg.js',
@@ -25,7 +25,10 @@ module.exports = function (config) {
 				pattern : 'bower_components/**/*.*',
 				included: false
 			},
-			'src/**/*.js',
+			{
+				pattern : 'src/**/*.js',
+				included: false
+			},
 			{
 				pattern : 'test/**/*.xml',
 				included: false
@@ -43,24 +46,24 @@ module.exports = function (config) {
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
 		// available reporters: https://npmjs.org/browse/keyword/karma-reporter
-		reporters    : ['progress'],
+		reporters: ['progress'],
 
 		// web server port
-		port         : 9876,
+		port: 9876,
 
 		// enable / disable colors in the output (reporters and logs)
-		colors       : true,
+		colors: true,
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel     : config.LOG_INFO,
+		logLevel: config.LOG_INFO,
 
 		// enable / disable watching file and executing tests whenever any file changes
-		autoWatch    : true,
+		autoWatch: true,
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers     : ['PhantomJS_custom'],
+		browsers: ['PhantomJS_custom'],
 
 		customLaunchers: {
 			'PhantomJS_custom': {
@@ -71,6 +74,6 @@ module.exports = function (config) {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun      : false
+		singleRun: false
 	});
 };

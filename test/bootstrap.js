@@ -3,6 +3,7 @@
  */
 
 window["sap-ui-config"] = {
-	"xx-bindingSyntax": "complex",
-	"debug": true
+	"xx-bindingSyntax": "complex"
 };
+
+window["sap-ui-loaddbg"] = true;
