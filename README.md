@@ -9,18 +9,19 @@ Bower component with additional components for SAPUI5/OpenUI5.
 1. ```bower install sapui5-extensions --save-dev```
 2. register the sap.extension namespace in your sapui5 bootstrap tag:
 Example:
-    ```html
-    <script id="sap-ui-bootstrap"
-        src="bower_components/openui5-bower/resources/sap-ui-core.js"
-        data-sap-ui-theme="sap_bluecrystal"
-        data-sap-ui-libs="sap.m, sap.ui.layout"
-        data-sap-ui-xx-bindingSyntax="complex"
-        data-sap-ui-resourceroots='{
-                        "my.namespace": "./",
-                        "openui5.extension": "bower_components/sapui5-extensions/src/"
-        }'> /* endOfResourceroots */
-    </script>
-    ```
+
+```html
+<script id="sap-ui-bootstrap"
+    src="bower_components/openui5-bower/resources/sap-ui-core.js"
+    data-sap-ui-theme="sap_bluecrystal"
+    data-sap-ui-libs="sap.m, sap.ui.layout"
+    data-sap-ui-xx-bindingSyntax="complex"
+    data-sap-ui-resourceroots='{
+                    "my.namespace": "./",
+                    "openui5.extension": "bower_components/sapui5-extensions/src/"
+    }'> /* endOfResourceroots */
+</script>
+```
     
 ## Tests
 

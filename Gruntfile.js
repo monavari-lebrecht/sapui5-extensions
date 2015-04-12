@@ -54,11 +54,14 @@ module.exports = function (grunt) {
 			}
 		},
 
-		qunit: {
-			all: {
-				src: ["test/**/*.html"]
-			}
-		},
+		/**
+		 * TODO: Enable grunt task for running qunit tests
+		 */
+		//qunit: {
+		//	all: {
+		//		src: ["test/**/*.html"]
+		//	}
+		//},
 
 		watch: {
 			gruntfile: {

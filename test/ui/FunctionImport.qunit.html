@@ -22,7 +22,12 @@
     <script type="text/javascript" src="/bower_components/openui5-bower/resources/sap/ui/qunit/qunit.js"></script>
     <script type="text/javascript" src="/bower_components/openui5-bower/resources/sap/ui/qunit/QUnitUtils.js"></script>
 
-    <script type="text/javascript" src="/test/qunit-connect-module-paths.js"></script>
+    <script type="text/javascript">
+        (function () {
+            jQuery.sap.registerModulePath("test", "test");
+            jQuery.sap.registerModulePath("openui5.extensions", "src");
+        })();
+    </script>
 
     <script language="javascript" src="/test/ui/FunctionImport.js"></script>
 </head>
