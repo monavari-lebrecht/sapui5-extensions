@@ -12,6 +12,7 @@
   "author": "Constantin Lebrecht",
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-contrib-connect": "^0.10.1",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.5.1",
     "grunt-contrib-watch": "~0.5.2",

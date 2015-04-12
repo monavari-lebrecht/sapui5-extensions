@@ -12,29 +12,19 @@
 
     <script id="sap-ui-bootstrap"
             type="text/javascript"
-            src="resources/sap-ui-core.js"
+            src="/bower_components/openui5-bower/resources/sap-ui-core.js"
             data-sap-ui-theme="sap_bluecrystal"
             data-sap-ui-noConflict="true">
     </script>
 
-    <link rel="stylesheet" href="resources/sap/ui/thirdparty/qunit.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="resources/sap/ui/thirdparty/qunit.js"></script>
-    <script type="text/javascript" src="resources/sap/ui/qunit/qunit-junit.js"></script>
-    <script type="text/javascript" src="resources/sap/ui/qunit/QUnitUtils.js"></script>
+    <link rel="stylesheet" href="/bower_components/openui5-bower/resources/sap/ui/thirdparty/qunit.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/bower_components/openui5-bower/resources/sap/ui/thirdparty/qunit.js"></script>
+    <script type="text/javascript" src="/bower_components/openui5-bower/resources/sap/ui/qunit/qunit.js"></script>
+    <script type="text/javascript" src="/bower_components/openui5-bower/resources/sap/ui/qunit/QUnitUtils.js"></script>
 
-    <script language="javascript">
-        /* Create and structure your QUnit tests here
-         Documentation can be found at http://docs.jquery.com/QUnit
+    <script type="text/javascript" src="/test/qunit-connect-module-paths.js"></script>
 
-         Example:
-         module("Module A");
-         test("1. a basic test example", 2, function() {
-         ok( true, "this test is fine" );
-         var value = "hello1";
-         equals( value, "hello1", "We expect value to be 'hello1'" );
-         });
-         */
-    </script>
+    <script language="javascript" src="/test/ui/FunctionImport.js"></script>
 </head>
 <body>
 <div id="qunit"></div>

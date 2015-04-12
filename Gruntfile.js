@@ -47,7 +47,7 @@ module.exports = function (grunt) {
 			},
 			'sapui5-extensions': {
 				files: grunt.file.expandMapping(['src/**/*.js'], null, {
-					rename : function (destBase, srcPath) {
+					rename: function (destBase, srcPath) {
 						return srcPath.replace('-dbg', '')
 					}
 				})
@@ -73,6 +73,20 @@ module.exports = function (grunt) {
 				files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
 				tasks: ["jshint"]
 			}
+		},
+
+		connect: {
+			qunit: {
+				options: {
+					port: 9090,
+
+					livereload: 35729,
+
+					hostname : "localhost",
+					base     : ".",
+					keepalive: true
+				}
+			}
 		}
 	});
 
@@ -81,6 +95,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 
 	grunt.registerTask("default", ["jshint", "qunit:all", "watch"]);
 };

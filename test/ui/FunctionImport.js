@@ -5,6 +5,7 @@
 (function ($, sap) {
 	'use strict';
 
+	jQuery.sap.require('sap.extensions.ui.FunctionImport');
 	jQuery.sap.require('sap.ui.model.odata.ODataModel');
 
 	module('Function Import');
