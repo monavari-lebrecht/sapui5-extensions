@@ -2,6 +2,51 @@
 
 	$.sap.declare('sap.extensions.ui.FunctionImport');
 
+	$.sap.require('sap.ui.model.json.JSONModel');
+	var metaModel = new sap.ui.model.json.JSONModel();
+
+	/**
+	 * resolves path in meta model dependent on given parameters
+	 *
+	 * @param urlParameters
+	 * @param functionImportName
+	 * @returns {string}
+	 */
+	function getPath(urlParameters, functionImportName) {
+		return '/' + encodeURI(JSON.stringify(urlParameters) + functionImportName);
+	}
+
+	/**
+	 * load data for given parameters from function import
+	 * @param functionImportName
+	 * @param urlParameters
+	 * @param model
+	 */
+	function loadData(functionImportName, urlParameters, model) {
+		model.callFunction(functionImportName, {
+			urlParameters: urlParameters,
+			success      : function (object, response) {
+				var path = getPath(urlParameters, functionImportName);
+				// check if we got a valid object
+				if (object) {
+					metaModel.setProperty(path, object[functionImportName]);
+				}
+				//if not, try to fetch it from xml by hand
+				if (response.headers["Content-Type"].indexOf('xml') > -1) {
+					var data = {},
+						parsedXML = jQuery.parseXML(arguments[1].body);
+
+					// collect all properties from xml
+					$('> *', parsedXML).children().each(function () {
+						data[this.localName] = $(this).text();
+					});
+
+					metaModel.setProperty(path, data);
+				}
+			}
+		});
+	}
+
 	/**
 	 * @class UI element that assigns a new model to its children where contents of function import will be assigned to in form
 	 * of a meta model.
@@ -17,9 +62,7 @@
 	 *                    modelName="SourceModel">
 	 *        <Text text="{FunctionImport>/Result}"/>
 	 * </sap.extensions.ui.FunctionImport>
-	 *
 	 * @name sap.extensions.ui.FunctionImport
-	 * @extends sap.ui.core.Control
 	 */
 	sap.ui.core.Control.extend('sap.extensions.ui.FunctionImport', /** @lends sap.extensions.ui.FunctionImport */ {
 		metadata: {
@@ -109,49 +152,67 @@
 				 */
 				var model = dataContainer.getParent().getModel(dataContainer.getModelName());
 
-				var metaModel = new sap.ui.model.json.JSONModel();
+				// iterate over url parameters to check if there is a computed value
+				var urlParameters = {};
+				$.each(dataContainer.getParameters(), function (index, value) {
+					if (value.indexOf('{') > -1) {
+						var bindingArguments = value.slice(1, value.length - 1).split('>');
+						var bindingContext;
+						if (bindingArguments.length > 1) {
+							bindingContext = dataContainer.getBindingContext(bindingArguments[0]);
+						} else {
+							bindingContext = dataContainer.getBindingContext();
+						}
+
+						if (bindingContext) {
+							urlParameters[index] = bindingContext.getProperty(bindingArguments[1]);
+						}
+					} else
+						urlParameters[index] = value;
+				});
+
+				var sPath = getPath(urlParameters, dataContainer.getFunctionImportName());
+
+				if (!metaModel.getProperty(sPath)) {
+					metaModel.setProperty(sPath, {});
+
+					if (typeof model.callFunction != 'function') {
+						if (!model instanceof sap.ui.model.odata.ODataModel) {
+							jQuery.sap.log.error('FunctionImport could not be called.', 'The model does not implement "callFunction" method. Is it really an instance of odata model?');
+						}
+						return;
+					}
+
+					// load async data from function import to meta model
+					var functionImportName = dataContainer.getFunctionImportName();
+					loadData(functionImportName, urlParameters, model);
+				}
 
 				// render child elements and assign meta model to it
 				dataContainer.getContent().forEach(function (dataObject) {
 					if (dataContainer.getAsModelName()) {
 						dataObject.setModel(metaModel, dataContainer.getAsModelName());
+						dataObject.setBindingContext(new sap.ui.model.Context(metaModel, sPath), dataContainer.getAsModelName());
 					} else {
 						dataObject.setModel(metaModel);
+						dataObject.setBindingContext(new sap.ui.model.Context(metaModel, sPath));
 					}
 
 					rm.renderControl(dataObject);
 				});
-
-				// iterate over url parameters to check if there is a computed value
-				var urlParameters = {};
-				$.each(dataContainer.getParameters(), function (index, value) {
-					var bindingContext = dataContainer.getBindingContext();
-					urlParameters[index] = bindingContext.getProperty('/' + value.slice(1, value.length - 1));
-				});
-
-				// load async data from function import to meta model
-				model.callFunction(dataContainer.getFunctionImportName(), {
-					urlParameters: urlParameters,
-					success      : function (object, response) {
-						// check if we got a valid object
-						if (object) {
-							metaModel.setData(object[dataContainer.getFunctionImportName()]);
-						}
-						//if not, try to fetch it from xml by hand
-						if (response.headers["Content-Type"].indexOf('xml') > -1) {
-							var data = {},
-								parsedXML = jQuery.parseXML(arguments[1].body);
-
-							// collect all properties from xml
-							$('> *', parsedXML).children().each(function () {
-								data[this.localName] = $(this).text();
-							});
-
-							metaModel.setData(data);
-						}
-					}
-				});
 			}
 		}
 	});
+
+	/**
+	 * refresh value for given values
+	 *
+	 * @param functionImportName
+	 * @param parameters
+	 * @param model
+	 */
+	sap.extensions.ui.FunctionImport.refresh = function (functionImportName, parameters, model) {
+		"use strict";
+		loadData(functionImportName, parameters, model);
+	};
 })(jQuery, sap);
