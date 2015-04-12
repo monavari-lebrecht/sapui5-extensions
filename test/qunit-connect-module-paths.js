@@ -1,4 +1,4 @@
 (function () {
 	jQuery.sap.registerModulePath("test", "test");
-	jQuery.sap.registerModulePath("sap.extensions", "src");
+	jQuery.sap.registerModulePath("openui5.extensions", "src");
 })();

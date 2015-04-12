@@ -1,6 +1,6 @@
 (function ($, sap) {
 
-	$.sap.declare('sap.extensions.ui.FunctionImport');
+	$.sap.declare('openui5.extensions.ui.FunctionImport');
 
 	$.sap.require('sap.ui.model.json.JSONModel');
 	var metaModel = new sap.ui.model.json.JSONModel();
@@ -52,7 +52,7 @@
 	 * of a meta model.
 	 *
 	 * @example
-	 * <sap.extensions.ui.FunctionImport
+	 * <openui5.extensions.ui.FunctionImport
 	 *                    functionImportName="FunctionName"
 	 *                    parameters="{
 	 *						Argument1: '1',
@@ -61,10 +61,10 @@
 	 *                    asModelName="FunctionImport"
 	 *                    modelName="SourceModel">
 	 *        <Text text="{FunctionImport>/Result}"/>
-	 * </sap.extensions.ui.FunctionImport>
-	 * @name sap.extensions.ui.FunctionImport
+	 * </openui5.extensions.ui.FunctionImport>
+	 * @name openui5.extensions.ui.FunctionImport
 	 */
-	sap.ui.core.Control.extend('sap.extensions.ui.FunctionImport', /** @lends sap.extensions.ui.FunctionImport */ {
+	sap.ui.core.Control.extend('openui5.extensions.ui.FunctionImport', /** @lends openui5.extensions.ui.FunctionImport */ {
 		metadata: {
 			properties        : {
 				modelName         : {
@@ -94,7 +94,7 @@
 		/**
 		 * Fetches all child content elements
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getContent
+		 * @name openui5.extensions.ui.FunctionImport#getContent
 		 * @public
 		 * @function
 		 */
@@ -102,7 +102,7 @@
 		/**
 		 * Fetches the parent element in xml view
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getParent
+		 * @name openui5.extensions.ui.FunctionImport#getParent
 		 * @public
 		 * @function
 		 */
@@ -110,7 +110,7 @@
 		/**
 		 * get model name the function import shall be imported from
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getModelName
+		 * @name openui5.extensions.ui.FunctionImport#getModelName
 		 * @public
 		 * @function
 		 */
@@ -118,7 +118,7 @@
 		/**
 		 * name of function import service of model
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getFunctionImportName
+		 * @name openui5.extensions.ui.FunctionImport#getFunctionImportName
 		 * @public
 		 * @function
 		 */
@@ -126,7 +126,7 @@
 		/**
 		 * parameters that shall be given to function import service
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getParameters
+		 * @name openui5.extensions.ui.FunctionImport#getParameters
 		 * @public
 		 * @function
 		 */
@@ -134,7 +134,7 @@
 		/**
 		 * function import data will be assigned to children control elements with this model name
 		 *
-		 * @name sap.extensions.ui.FunctionImport#getAsModelName
+		 * @name openui5.extensions.ui.FunctionImport#getAsModelName
 		 * @public
 		 * @function
 		 */
@@ -144,7 +144,7 @@
 			 * Render function for control
 			 *
 			 * @param {sap.ui.core.RenderManager} rm
-			 * @param {sap.extensions.ui.FunctionImport} dataContainer
+			 * @param {openui5.extensions.ui.FunctionImport} dataContainer
 			 */
 			render: function (rm, dataContainer) {
 				/**
@@ -211,7 +211,7 @@
 	 * @param parameters
 	 * @param model
 	 */
-	sap.extensions.ui.FunctionImport.refresh = function (functionImportName, parameters, model) {
+	openui5.extensions.ui.FunctionImport.refresh = function (functionImportName, parameters, model) {
 		"use strict";
 		loadData(functionImportName, parameters, model);
 	};
