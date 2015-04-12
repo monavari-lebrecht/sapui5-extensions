@@ -1,101 +1,86 @@
 /*global module:false, require:false*/
+"use strict";
+
 module.exports = function (grunt) {
 
-    /**
-     * returns object with key representing the release filename and value representing the debug filename
-     */
-    var getDebugFiles = function () {
-        var detectedFiles = {};
-        var observedFolders = ['./src', './src/ui/'];
+	// Project configuration.
+	grunt.initConfig({
+		// Task configuration.
+		jshint: {
+			options: {
+				"devel"  : true,
+				"curly"  : true,
+				"eqeqeq" : true,
+				"immed"  : true,
+				"latedef": true,
+				"newcap" : true,
+				"noarg"  : true,
+				"sub"    : true,
+				"undef"  : true,
+				"unused" : true,
+				"boss"   : true,
+				"eqnull" : true,
+				"browser": true,
+				"globals": {
+					"jQuery": true,
+					"sap"   : true,
+					"$"     : true,
+					"util"  : true,
+					"view"  : true,
+					"model" : true
+				}
+			},
 
-        var iterateOverDirectoryCallback = function (directory) {
-            var files = require('fs').readdirSync(directory);
-            var regex = /(.*)-dbg\.(.*)/;
-            files.forEach(function (filename) {
-                if ((directory + filename).match(regex)) {
-                    detectedFiles[directory + filename.replace(regex, '$1.$2')] = directory + filename;
-                }
-            });
-        };
-        observedFolders.forEach(iterateOverDirectoryCallback);
+			gruntfile: {
+				src: "Gruntfile.js"
+			}
+		},
 
-        return detectedFiles;
-    };
+		uglify: {
+			options            : {
+				compress: {
+					global_defs: {
+						"DEBUG": false
+					},
+					dead_code  : true
+				}
+			},
+			'sapui5-extensions': {
+				files: grunt.file.expandMapping(['src/**/*.js'], null, {
+					rename : function (destBase, srcPath) {
+						return srcPath.replace('-dbg', '')
+					}
+				})
+			}
+		},
 
-    // Project configuration.
-    grunt.initConfig({
-        // Task configuration.
-        jshint: {
-            options: {
-                "devel"  : true,
-                "curly"  : true,
-                "eqeqeq" : true,
-                "immed"  : true,
-                "latedef": true,
-                "newcap" : true,
-                "noarg"  : true,
-                "sub"    : true,
-                "undef"  : true,
-                "unused" : true,
-                "boss"   : true,
-                "eqnull" : true,
-                "browser": true,
-                "globals": {
-                    "jQuery": true,
-                    "sap"   : true,
-                    "$"     : true,
-                    "util"  : true,
-                    "view"  : true,
-                    "model" : true
-                }
-            },
+		qunit: {
+			all: {
+				src: ["test/**/*.html"]
+			}
+		},
 
-            gruntfile  : {
-                src: "Gruntfile.js"
-            }
-        },
+		watch: {
+			gruntfile: {
+				files: "<%= jshint.gruntfile.src %>",
+				tasks: ["jshint:gruntfile"]
+			},
+			uglify   : {
+				files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
+				tasks: ["uglify"]
+			},
+			jshint   : {
+				files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
+				tasks: ["jshint"]
+			}
+		}
+	});
 
-        uglify: {
-            options: {
-                compress: {
-                    global_defs: {
-                        "DEBUG": false
-                    },
-                    dead_code  : true
-                }
-            },
-            'sapui5-extensions': {
-                files: getDebugFiles()
-            }
-        },
+	// These plugins provide necessary tasks
+	grunt.loadNpmTasks("grunt-contrib-qunit");
+	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 
-        qunit: {
-            all: {
-                src: ["test/**/*.html"]
-            }
-        },
-
-        watch: {
-            gruntfile : {
-                files: "<%= jshint.gruntfile.src %>",
-                tasks: ["jshint:gruntfile"]
-            },
-            uglify    : {
-                files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
-                tasks: ["uglify"]
-            },
-            jshint    : {
-                files: ["src/**/*-dbg*.js", "!./node_modules/**", "!./bower_components/**"],
-                tasks: ["jshint"]
-            }
-        }
-    });
-
-    // These plugins provide necessary tasks
-    grunt.loadNpmTasks("grunt-contrib-qunit");
-    grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    grunt.registerTask("default", ["jshint", "qunit:all", "watch"]);
+	grunt.registerTask("default", ["jshint", "qunit:all", "watch"]);
 };
